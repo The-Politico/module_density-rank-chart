@@ -1,0 +1,17 @@
+@import 'variables';
+@import 'chart';
+
+@import '~politico-style/scss/sketch/main.scss';
+
+#{$DensityRankChart-container} {
+  width: 150px;
+  margin: 20px auto;
+}
+
+.chart-container{
+  min-height: calc(100vh - 165px);
+}
+
+nav.global b{
+  color: $politico-dark-red;
+}

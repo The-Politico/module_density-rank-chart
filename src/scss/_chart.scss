@@ -1,0 +1,13 @@
+#{$DensityRankChart-container} {
+
+  div.legend{
+    font-size: 10px;
+  }
+
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+}
