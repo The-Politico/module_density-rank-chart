@@ -1,0 +1,8 @@
+#DensityRankChart-container div.legend {
+  font-size: 10px;
+}
+#DensityRankChart-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
