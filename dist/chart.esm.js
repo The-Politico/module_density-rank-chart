@@ -129,7 +129,6 @@ var chart = (function () {
           var y = d3.scaleLinear().domain([0, d3.max(densityPath, function (d) {
             return d[1];
           })]).range([height - margin.bottom - margin.top, 0]);
-          console.log('y', y.domain());
           d3.select(node).appendSelect('h5').style('text-align', 'center').text(props.title);
           d3.select(node).appendSelect('svg');
           var legend = d3.select(node).appendSelect('div', 'legend');

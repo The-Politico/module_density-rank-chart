@@ -85,8 +85,6 @@ export default () => ({
           .domain([0, d3.max(densityPath, d => d[1])])
           .range([height - margin.bottom - margin.top, 0]);
 
-        console.log('y', y.domain());
-
         d3.select(node)
           .appendSelect('h5')
           .style('text-align', 'center')
