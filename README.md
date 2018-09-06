@@ -4,6 +4,8 @@
 
 Draws a kernel density estimate of a distribution while highlighting a particular point within the distribution. Well-suited for small multiples showing how a member of a population compares to its peers.
 
+[Demo.](https://the-politico.github.io/module_density-rank-chart/)
+
 A [reusable chart module](https://github.com/The-Politico/generator-politico-graphics) made with ❤️ at POLITICO.
 
 ![](preview.png)
