@@ -11,8 +11,8 @@ class ChartContainer extends React.Component {
   }
   componentDidMount() {
     // Create the chart on mount
-    this.createChart(0.29, null, {
-      kernel: { bandwidth: 0.07 },
+    this.createChart(45000, null, {
+      kernel: { bandwidth: 0.1 },
     });
     // Add a listener to resize chart with the window
     window.addEventListener('resize', debounce(this.resizeChart, 250));

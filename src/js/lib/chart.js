@@ -33,12 +33,12 @@ export default () => ({
       },
       title: 'Density',
       kernel: {
-        function: kernel.fun.epanechnikov,
+        func: kernel.fun.epanechnikov,
         bandwidth: 0.05,
       },
     };
     // The point we will highlight
-    let point = 0.5;
+    let point = 45000;
 
     function chart(selection) {
       selection.each((data, i, elements) => {
@@ -51,13 +51,19 @@ export default () => ({
         const { margin, height } = props;
 
         const extent = d3.extent(data);
-        const offset = (extent[1] - extent[0]) / 100;
+        const min = extent[0];
+        const max = extent[1];
+        const offset = 1 / 100;
+        // We normalize data to fit in a range 0 - 1
+        const normalize = d => (d - min) / (max - min);
+        const normalizedData = data.map(d => normalize(d));
+        const normalPoint = normalize(point);
 
         const x = d3.scaleLinear()
-          .domain([extent[0], extent[1]])
+          .domain([0, 1])
           .range([0, width - margin.right - margin.left]);
 
-        const density = kernel.density(data, props.kernel.function, props.kernel.bandwidth);
+        const density = kernel.density(normalizedData, props.kernel.func, props.kernel.bandwidth);
 
         const densityPath = x.ticks(100).map((d) => {
           const x = d;
@@ -65,19 +71,21 @@ export default () => ({
           return [x, y];
         });
         // Always make density path start and end at the Y baseline
-        densityPath.unshift([extent[0], 0]);
-        densityPath.push([extent[1], 0]);
+        densityPath.unshift([0, 0]);
+        densityPath.push([1, 0]);
 
         const pointPath = [
-          [point - offset, 0],
-          [point - offset, density(point - offset)],
-          [point + offset, density(point + offset)],
-          [point + offset, 0],
+          [normalPoint - offset, 0],
+          [normalPoint - offset, density(normalPoint - offset)],
+          [normalPoint + offset, density(normalPoint + offset)],
+          [normalPoint + offset, 0],
         ];
 
         const y = d3.scaleLinear()
           .domain([0, d3.max(densityPath, d => d[1])])
           .range([height - margin.bottom - margin.top, 0]);
+
+        console.log('y', y.domain());
 
         d3.select(node)
           .appendSelect('h5')
@@ -129,8 +137,8 @@ export default () => ({
           .attr('fill', props.pointFill)
           .attr('d', triangle)
           .attr('transform', `
-            rotate(180 ${x(point)} ${y(density(point))})
-            translate(${x(point)}, ${y(density(point)) + 10})
+            rotate(180 ${x(normalPoint)} ${y(density(normalPoint))})
+            translate(${x(normalPoint)}, ${y(density(normalPoint)) + 10})
             `);
       });
     }
@@ -179,7 +187,7 @@ export default () => ({
   create(selection, point, data, props = {}) {
     this._selection = selection;
     this._point = point || 0;
-    this._data = data || defaultData.map(d => d.value);
+    this._data = data || defaultData;
     this._props = props;
 
     this.draw();
