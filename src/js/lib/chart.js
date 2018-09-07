@@ -53,7 +53,7 @@ export default () => ({
         const extent = d3.extent(data);
         const min = extent[0];
         const max = extent[1];
-        const offset = 1 / 100;
+        const offset = 1 / 200;
         // We normalize data to fit in a range 0 - 1
         const normalize = d => (d - min) / (max - min);
         const normalizedData = data.map(d => normalize(d));

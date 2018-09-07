@@ -105,7 +105,7 @@ var chart = (function () {
           var extent = d3.extent(data);
           var min = extent[0];
           var max = extent[1];
-          var offset = 1 / 100; // We normalize data to fit in a range 0 - 1
+          var offset = 1 / 200; // We normalize data to fit in a range 0 - 1
 
           var normalize = function normalize(d) {
             return (d - min) / (max - min);
